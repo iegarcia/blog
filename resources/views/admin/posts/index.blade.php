@@ -28,7 +28,7 @@
                   <td width="10px"><a href="{{ route('posts.edit', $post->id)}}" class="btn btn-sm btn-secondary">Editar</a></td>
                   <td width="10px">
                     {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'DELETE']) !!}
-                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                    <button  onclick="confirm('Esta seguro que desea eliminarlo?')"class="btn btn-sm btn-danger">Eliminar</button>
                     {!! form::close() !!}
                   </td>
                 </tr>

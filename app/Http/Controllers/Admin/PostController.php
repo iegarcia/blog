@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Request\PostStoreRequest;
-use App\Http\Request\PostUpdateRequest;
 use App\Post;
 
 class PostController extends Controller
 {
-  public function  __contruct(){
+  public function  __contruct()
+  {
     $this->middleware('auth');// Protegemos la Publicación
   }
     /**
@@ -41,11 +42,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TagStoreRequest $request)
+    public function store(PostStoreRequest $request)
     {
       $post = Post::create($request->all());//Guardamos la Publicación
-
-      return redirect()->route('posts.edit', $post->id)->with('info', 'Publicación exitosa');
+      return redirect()->route('posts.edit', $post->id)->with('info', 'Creación Exitosa');
     }
 
     /**
@@ -81,11 +81,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TagUpdateRequest $request, $id)
+    public function update(PostStoreRequest $request, $id)
     {
         $post = Post::find($id);
-        $post->fill($request->all()->save());//Aca se actualiza la Publicación y se guarda la nueva version
-        return redirect()->route('posts.edit', $post->id)->with('info', 'Modificación exitosa');
+        $post->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
+        return redirect()->route('posts.edit', $post->id)->with('info', 'Se ha modificado la publicación');
     }
 
     /**
@@ -97,6 +97,6 @@ class PostController extends Controller
     public function destroy($id)
     {
         Post::find($id)->delete();// Se busca y se elimina
-        return back()->with('info', 'Eliminado');
+        return back()->with('info', 'Se ha eliminado la publicación');
     }
 }

@@ -24,8 +24,8 @@ class PostUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-          'name' => 'required',
-          'slug' => 'required|unique:post.slug,' . $this->tag,
+          'title' => 'required|',
+          'slug' => 'required|unique:posts,slug,' . $this->post,
         ];
     }
 }

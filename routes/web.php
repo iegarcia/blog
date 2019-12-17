@@ -23,4 +23,4 @@ Route::get('category/{slug}', 'web\PageController@category')->name('category');
 
 Route::get('tag/{slug}', 'web\PageController@tag')->name('tag');
 
-Route::resource('posts', 'Admin\PostController');
+Route::resource('posts', 'Admin\PostController')->middleware('auth');

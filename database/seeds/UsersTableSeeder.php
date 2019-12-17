@@ -14,10 +14,17 @@ class UsersTableSeeder extends Seeder
         factory(App\User::class, 3)->create();
 
         DB::table('users')->insert([
-            'name' => 'test',
-            'email' => 'test@test.com',
+            'name' => 'admin',
+            'email' => 'admin@test.com',
             'password' => bcrypt('123456'),
             'role' => '2',
           ]);
+
+          DB::table('users')->insert([
+              'name' => 'test',
+              'email' => 'test@test.com',
+              'password' => bcrypt('123456'),
+              'role' => '1',
+            ]);
     }
 }

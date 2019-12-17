@@ -10,7 +10,7 @@ use App\Category;
 class PageController extends Controller
 {
   public function blog(){
-    $posts = Post::orderBy('id', 'DESC')->paginate(3);
+    $posts = Post::orderBy('id', 'DESC')->paginate(4);
     return view('web.posts', compact("posts"));
   }
 
