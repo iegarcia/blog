@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\PostStoreRequest;
-use App\Http\Requests\PostUpdateRequest;
+use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use App\Http\Controllers\Controller;
-use App\Post;
+use App\Category;
 
-class PostController extends Controller
+class CategoryController extends Controller
 {
   public function  __contruct()
   {
@@ -21,11 +21,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'DESC')
-        ->where('user_id', auth()->user()->id)//Filtramos por las nuestras
-        ->paginate(5);//Vemos las Publicaciones
+        $cats = Category::orderBy('id', 'DESC')->paginate(5);//Vemos las Publicaciones
 
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.categories.index', compact('cats'));
     }
 
     /**
@@ -35,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');//Mostramos el formulario de creacion
+        return view('admin.categories.create');//Mostramos el formulario de creacion
     }
 
     /**
@@ -44,10 +42,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostStoreRequest $request)
+    public function store(CategoryStoreRequest $request)
     {
-      $post = Post::create($request->all());//Guardamos la Publicación
-      return redirect()->route('posts.edit', $post->id)->with('info', 'Creación Exitosa');
+      $cats = Category::create($request->all());//Guardamos la Publicación
+      return redirect()->route('categories.edit', $cats->id)->with('info', 'Creación Exitosa');
     }
 
     /**
@@ -58,9 +56,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);//Mostramos la Publicación pedida
+        $cats = Category::find($id);//Mostramos la Publicación pedida
 
-        return view('admin.posts.show', compact('post'));
+        return view('admin.categories.show', compact('cats'));
     }
 
     /**
@@ -71,9 +69,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-      $post = Post::find($id);//Se modifica
+      $cats = Category::find($id);//Se modifica
 
-      return view('admin.posts.edit', compact('post'));
+      return view('admin.categories.edit', compact('cats'));
     }
 
     /**
@@ -83,11 +81,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostStoreRequest $request, $id)
+    public function update(CategoryStoreRequest $request, $id)
     {
-        $post = Post::find($id);
-        $post->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
-        return redirect()->route('posts.edit', $post->id)->with('info', 'Se ha modificado la publicación');
+        $cats = Category::find($id);
+        $cats->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
+        return redirect()->route('categories.edit', $cats->id)->with('info', 'Se ha modificado la categoría');
     }
 
     /**
@@ -98,7 +96,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();// Se busca y se elimina
-        return back()->with('info', 'Se ha eliminado la publicación');
+        Category::find($id)->delete();// Se busca y se elimina
+        return back()->with('info', 'Se ha eliminado la categoría');
     }
 }

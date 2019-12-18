@@ -8,7 +8,7 @@ use App\Http\Requests\PostUpdateRequest;
 use App\Http\Controllers\Controller;
 use App\Post;
 
-class PostController extends Controller
+class AdminPostController extends Controller
 {
   public function  __contruct()
   {
@@ -21,9 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'DESC')
-        ->where('user_id', auth()->user()->id)//Filtramos por las nuestras
-        ->paginate(5);//Vemos las Publicaciones
+        $posts = Post::orderBy('id', 'DESC')->paginate(5);//Vemos las Publicaciones
 
         return view('admin.posts.index', compact('posts'));
     }

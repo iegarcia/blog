@@ -6,16 +6,15 @@
       <div class="col-md-8 col-md-offset-2">
         <div class="card">
           <div class="card-header">
-            Ver
+            Editar Categoria
           </div>
 
           <div class="card-body">
-          <p><strong>Nombre:</strong> {{$post->title}}</p>
-          <p><strong>Slug:</strong> {{$post->slug}}</p>
+          {!! Form::model($cats, ['route' => ['categories.update', $cats->id],'method' => 'PUT']) !!}
+          @include('admin.categories.partials.form')
+          {!! Form::close() !!}
         </div>
       </div>
-      <br>
-      <a href="{{route('posts.index')}}"><button class="btn btn-sm btn-secondary">Atras</button></a>
     </div>
   </div>
 @endsection

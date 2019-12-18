@@ -6,16 +6,16 @@
       <div class="col-md-8 col-md-offset-2">
         <div class="card">
           <div class="card-header">
-            Ver
+            Ver Categoria
           </div>
 
           <div class="card-body">
-          <p><strong>Nombre:</strong> {{$post->title}}</p>
-          <p><strong>Slug:</strong> {{$post->slug}}</p>
+          <p><strong>Nombre:</strong> {{$cats->name}}</p>
+          <p><strong>Slug:</strong> {{$cats->slug}}</p>
         </div>
       </div>
       <br>
-      <a href="{{route('posts.index')}}"><button class="btn btn-sm btn-secondary">Atras</button></a>
+      <a href="{{route('categories.index')}}"><button class="btn btn-sm btn-secondary">Atras</button></a>
     </div>
   </div>
 @endsection

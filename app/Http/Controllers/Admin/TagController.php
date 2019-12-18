@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\PostStoreRequest;
-use App\Http\Requests\PostUpdateRequest;
+use App\Http\Requests\TagStoreRequest;
+use App\Http\Requests\TagUpdateRequest;
 use App\Http\Controllers\Controller;
-use App\Post;
+use App\Tag;
 
-class PostController extends Controller
+class TagController extends Controller
 {
   public function  __contruct()
   {
@@ -21,11 +21,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'DESC')
-        ->where('user_id', auth()->user()->id)//Filtramos por las nuestras
-        ->paginate(5);//Vemos las Publicaciones
+        $tags = Tag::orderBy('id', 'DESC')->paginate(5);//Vemos las Publicaciones
 
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.tags.index', compact('tags'));
     }
 
     /**
@@ -35,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');//Mostramos el formulario de creacion
+        return view('admin.tags.create');//Mostramos el formulario de creacion
     }
 
     /**
@@ -44,10 +42,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostStoreRequest $request)
+    public function store(TagStoreRequest $request)
     {
-      $post = Post::create($request->all());//Guardamos la Publicación
-      return redirect()->route('posts.edit', $post->id)->with('info', 'Creación Exitosa');
+      $tag = Tag::create($request->all());//Guardamos la Publicación
+      return redirect()->route('tags.edit', $tag->id)->with('info', 'Creación Exitosa');
     }
 
     /**
@@ -58,9 +56,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);//Mostramos la Publicación pedida
+        $tag = Tag::find($id);//Mostramos la Publicación pedida
 
-        return view('admin.posts.show', compact('post'));
+        return view('admin.tags.show', compact('tag'));
     }
 
     /**
@@ -71,9 +69,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-      $post = Post::find($id);//Se modifica
+      $tag = Tag::find($id);//Se modifica
 
-      return view('admin.posts.edit', compact('post'));
+      return view('admin.tags.edit', compact('tag'));
     }
 
     /**
@@ -83,11 +81,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostStoreRequest $request, $id)
+    public function update(TagStoreRequest $request, $id)
     {
-        $post = Post::find($id);
-        $post->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
-        return redirect()->route('posts.edit', $post->id)->with('info', 'Se ha modificado la publicación');
+        $tag = Tag::find($id);
+        $tag->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
+        return redirect()->route('tags.edit', $tag->id)->with('info', 'Se ha modificado la etiqueta');
     }
 
     /**
@@ -98,7 +96,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();// Se busca y se elimina
-        return back()->with('info', 'Se ha eliminado la publicación');
+        Tag::find($id)->delete();// Se busca y se elimina
+        return back()->with('info', 'Se ha eliminado la etiqueta');
     }
 }
