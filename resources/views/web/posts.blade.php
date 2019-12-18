@@ -17,6 +17,7 @@
               {{ $post->excerpt }}
             </p>
             <a href="{{ route('post', $post->slug)}}" class="d-flex justify-content-end">Leer más</a>
+            <span>{{$post->comments->count()}} {{str_plural('comment', $post->comments->count())}}</span>
           </div>
         </div>
       @endforeach

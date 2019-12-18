@@ -24,6 +24,21 @@
               @endforeach
             </p>
             <p class="float-right">Publicado el: {{$post->created_at}}</p>
+            <h3>Comentarios</h3>
+            @if(Auth::check())
+              {{ Form::open(['route' => ['comments.store'], 'method' => 'POST']) }}
+              <p>{{ Form::textarea('body', old('body')) }}</p>
+              {{ Form::hidden('post_id', $post->id) }}
+              <p>{{ Form::submit('send') }}</p>
+              {{ Form::close() }}
+            @endif
+            @forelse ($post->comments as $comment)
+              <p>{{$comment->user->name}} {{$comment->created_at}}</p>
+              <p>{{$comment->body}}</p>
+              <hr>
+            @empty
+              <p>Sin Comentarios</p>
+            @endforelse
           </div>
         </div>
     </div>

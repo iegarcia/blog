@@ -28,5 +28,9 @@ Route::resource('tags', 'Admin\TagController')->middleware('auth');
 Route::resource('categories', 'Admin\CategoryController')->middleware('auth');
 Route::resource('posts', 'Admin\PostController')->middleware('auth');
 
+//Comentarios
+Route::resource('comments', 'CommentsController');
+
+
 //Boss zone
 Route::resource('admin', 'Admin\AdminPostController')->middleware('auth', 'role');
