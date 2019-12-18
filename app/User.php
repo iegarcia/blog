@@ -40,4 +40,9 @@ class User extends Authenticatable
     public function posts(){
       return $this->hasMany(Post::class);
       }
+
+    public function hasRole($role)
+      {
+        return null != $this->roles()->whereIn('column', 'name', $role)->first();
+      }
 }

@@ -29,4 +29,4 @@ Route::resource('categories', 'Admin\CategoryController')->middleware('auth');
 Route::resource('posts', 'Admin\PostController')->middleware('auth');
 
 //Boss zone
-Route::resource('admin', 'Admin\AdminPostController');
+Route::resource('admin', 'Admin\AdminPostController')->middleware('auth', 'role');

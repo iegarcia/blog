@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Post;
+use App\Category;
+use App\Tag;
+
 
 class PostController extends Controller
 {
@@ -35,7 +39,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');//Mostramos el formulario de creacion
+      $cats = Category::orderBy('name', 'ASC')->pluck('name', 'id');
+      $tags = Tag::orderBy('name', 'ASC')->get();
+        return view('admin.posts.create', compact('cats', 'tags'));//Mostramos el formulario de creacion
     }
 
     /**
@@ -47,6 +53,11 @@ class PostController extends Controller
     public function store(PostStoreRequest $request)
     {
       $post = Post::create($request->all());//Guardamos la Publicación
+      if ($request->file('file')) {
+        $path = Storage::disk('public')->put('image', $request->file('file'));
+        $post->fill(['file' => asset($path)])->save();
+      }
+      $post->tags()->attach($request->get('tags'));
       return redirect()->route('posts.edit', $post->id)->with('info', 'Creación Exitosa');
     }
 
@@ -59,6 +70,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);//Mostramos la Publicación pedida
+        $this->authorize('pass', $post);
 
         return view('admin.posts.show', compact('post'));
     }
@@ -72,8 +84,11 @@ class PostController extends Controller
     public function edit($id)
     {
       $post = Post::find($id);//Se modifica
+      $this->authorize('pass', $post);
+      $cats = Category::orderBy('name', 'ASC')->pluck('name', 'id');
+      $tags = Tag::orderBy('name', 'ASC')->get();
 
-      return view('admin.posts.edit', compact('post'));
+      return view('admin.posts.edit', compact('post', 'cats', 'tags'));
     }
 
     /**
@@ -86,7 +101,14 @@ class PostController extends Controller
     public function update(PostStoreRequest $request, $id)
     {
         $post = Post::find($id);
+        $this->authorize('pass', $post);
         $post->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
+        if ($request->file('file')) {
+          $path = Storage::disk('storage/public')->put('image', $request->file('file'));
+          $post->fill(['file' => asset($path)])->save();
+        }
+        $post->tags()->sync($request->get('tags'));
+
         return redirect()->route('posts.edit', $post->id)->with('info', 'Se ha modificado la publicación');
     }
 
@@ -98,7 +120,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();// Se busca y se elimina
+        Post::find($id);// Se busca y se elimina
+        $this->authorize('pass', $post);
+        $post->delete();
         return back()->with('info', 'Se ha eliminado la publicación');
     }
 }
