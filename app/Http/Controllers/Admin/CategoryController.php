@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
   public function  __contruct()
   {
-    $this->middleware('auth');// Protegemos la Publicación
+    $this->middleware('auth');
   }
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $cats = Category::orderBy('id', 'DESC')->paginate(5);//Vemos las Publicaciones
+        $cats = Category::orderBy('id', 'DESC')->paginate(5);
 
         return view('admin.categories.index', compact('cats'));
     }
@@ -33,7 +33,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');//Mostramos el formulario de creacion
+        return view('admin.categories.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryStoreRequest $request)
     {
-      $cats = Category::create($request->all());//Guardamos la Publicación
+      $cats = Category::create($request->all());
       return redirect()->route('categories.edit', $cats->id)->with('info', 'Creación Exitosa');
     }
 
@@ -56,7 +56,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $cats = Category::find($id);//Mostramos la Publicación pedida
+        $cats = Category::find($id);
 
         return view('admin.categories.show', compact('cats'));
     }
@@ -69,7 +69,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-      $cats = Category::find($id);//Se modifica
+      $cats = Category::find($id);
 
       return view('admin.categories.edit', compact('cats'));
     }
@@ -84,7 +84,7 @@ class CategoryController extends Controller
     public function update(CategoryStoreRequest $request, $id)
     {
         $cats = Category::find($id);
-        $cats->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
+        $cats->fill($request->all())->save();
         return redirect()->route('categories.edit', $cats->id)->with('info', 'Se ha modificado la categoría');
     }
 
@@ -96,7 +96,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::find($id)->delete();// Se busca y se elimina
+        Category::find($id)->delete();
         return back()->with('info', 'Se ha eliminado la categoría');
     }
 }

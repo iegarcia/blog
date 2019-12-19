@@ -12,7 +12,7 @@ class TagController extends Controller
 {
   public function  __contruct()
   {
-    $this->middleware('auth');// Protegemos la Publicación
+    $this->middleware('auth');
   }
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::orderBy('id', 'DESC')->paginate(5);//Vemos las Publicaciones
+        $tags = Tag::orderBy('id', 'DESC')->paginate(5);
 
         return view('admin.tags.index', compact('tags'));
     }
@@ -33,7 +33,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('admin.tags.create');//Mostramos el formulario de creacion
+        return view('admin.tags.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class TagController extends Controller
      */
     public function store(TagStoreRequest $request)
     {
-      $tag = Tag::create($request->all());//Guardamos la Publicación
+      $tag = Tag::create($request->all());
       return redirect()->route('tags.edit', $tag->id)->with('info', 'Creación Exitosa');
     }
 
@@ -56,7 +56,7 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        $tag = Tag::find($id);//Mostramos la Publicación pedida
+        $tag = Tag::find($id);
 
         return view('admin.tags.show', compact('tag'));
     }
@@ -69,7 +69,7 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-      $tag = Tag::find($id);//Se modifica
+      $tag = Tag::find($id);
 
       return view('admin.tags.edit', compact('tag'));
     }
@@ -84,7 +84,7 @@ class TagController extends Controller
     public function update(TagStoreRequest $request, $id)
     {
         $tag = Tag::find($id);
-        $tag->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
+        $tag->fill($request->all())->save();
         return redirect()->route('tags.edit', $tag->id)->with('info', 'Se ha modificado la etiqueta');
     }
 
@@ -96,7 +96,7 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        Tag::find($id)->delete();// Se busca y se elimina
+        Tag::find($id)->delete();
         return back()->with('info', 'Se ha eliminado la etiqueta');
     }
 }

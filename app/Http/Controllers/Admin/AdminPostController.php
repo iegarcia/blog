@@ -12,7 +12,7 @@ class AdminPostController extends Controller
 {
   public function  __contruct()
   {
-    $this->middleware('auth');// Protegemos la Publicación
+    $this->middleware('auth');
   }
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class AdminPostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'DESC')->paginate(5);//Vemos las Publicaciones
+        $posts = Post::orderBy('id', 'DESC')->paginate(5);
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -33,7 +33,7 @@ class AdminPostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');//Mostramos el formulario de creacion
+        return view('admin.posts.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class AdminPostController extends Controller
      */
     public function store(PostStoreRequest $request)
     {
-      $post = Post::create($request->all());//Guardamos la Publicación
+      $post = Post::create($request->all());
       return redirect()->route('posts.edit', $post->id)->with('info', 'Creación Exitosa');
     }
 
@@ -56,7 +56,7 @@ class AdminPostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);//Mostramos la Publicación pedida
+        $post = Post::find($id);
 
         return view('admin.posts.show', compact('post'));
     }
@@ -69,7 +69,7 @@ class AdminPostController extends Controller
      */
     public function edit($id)
     {
-      $post = Post::find($id);//Se modifica
+      $post = Post::find($id);
 
       return view('admin.posts.edit', compact('post'));
     }
@@ -84,7 +84,7 @@ class AdminPostController extends Controller
     public function update(PostStoreRequest $request, $id)
     {
         $post = Post::find($id);
-        $post->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
+        $post->fill($request->all())->save();
         return redirect()->route('posts.edit', $post->id)->with('info', 'Se ha modificado la publicación');
     }
 
@@ -96,7 +96,7 @@ class AdminPostController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();// Se busca y se elimina
+        Post::find($id)->delete();
         return back()->with('info', 'Se ha eliminado la publicación');
     }
 }

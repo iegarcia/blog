@@ -6,7 +6,7 @@ En este repositorio encontraras un blog armado con Laravel entre otros component
 - Perfiles administrativos y de sesión
 - ABM de publicaciones (solo usuarios registrados)
 - Caja de comentarios (solo usuarios registrados)
-- Listado de publicaciones 
+- Listado de publicaciones
 
 Para correr este blog en el ordenador se debe utilizar ciertos comandos de consola (**Se requiere composer**)  
 Para iniciar el servidor `php artisan serv`  
@@ -16,8 +16,8 @@ Una vez levantado el servidor puede usar de prueba los siguientes usuarios:
 **Administrador:**  
 Email -> admin@test.com  
 Pass -> 123456  
-  
-Usuario normal o podes registrarte y probar :smile:  
+
+**Usuario normal** o podes registrarte y probar :smile:  
 Email -> test@test.com  
 Pass -> 123456  
 

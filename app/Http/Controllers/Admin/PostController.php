@@ -16,7 +16,7 @@ class PostController extends Controller
 {
   public function  __contruct()
   {
-    $this->middleware('auth');// Protegemos la Publicación
+    $this->middleware('auth');
   }
   /**
   * Display a listing of the resource.
@@ -26,8 +26,8 @@ class PostController extends Controller
   public function index()
   {
     $posts = Post::orderBy('id', 'DESC')
-    ->where('user_id', auth()->user()->id)//Filtramos por las nuestras
-    ->paginate(5);//Vemos las Publicaciones
+    ->where('user_id', auth()->user()->id)
+    ->paginate(5);
 
     return view('admin.posts.index', compact('posts'));
   }
@@ -41,7 +41,7 @@ class PostController extends Controller
   {
     $cats = Category::orderBy('name', 'ASC')->pluck('name', 'id');
     $tags = Tag::orderBy('name', 'ASC')->get();
-    return view('admin.posts.create', compact('cats', 'tags'));//Mostramos el formulario de creacion
+    return view('admin.posts.create', compact('cats', 'tags'));
   }
 
   /**
@@ -52,7 +52,7 @@ class PostController extends Controller
   */
   public function store(PostStoreRequest $request)
   {
-    $post = Post::create($request->all());//Guardamos la Publicación
+    $post = Post::create($request->all());
     if ($request->file('file')) {
       $path = Storage::disk('public')->put('image', $request->file('file'));
       $post->fill(['file' => asset($path)])->save();
@@ -69,7 +69,7 @@ class PostController extends Controller
   */
   public function show($id)
   {
-    $post = Post::find($id);//Mostramos la Publicación pedida
+    $post = Post::find($id);
     $this->authorize('pass', $post);
 
     return view('admin.posts.show', compact('post'));
@@ -83,7 +83,7 @@ class PostController extends Controller
   */
   public function edit($id)
   {
-    $post = Post::find($id);//Se modifica
+    $post = Post::find($id);
     $this->authorize('pass', $post);
     $cats = Category::orderBy('name', 'ASC')->pluck('name', 'id');
     $tags = Tag::orderBy('name', 'ASC')->get();
@@ -102,7 +102,7 @@ class PostController extends Controller
   {
     $post = Post::find($id);
     $this->authorize('pass', $post);
-    $post->fill($request->all())->save();//Aca se actualiza la Publicación y se guarda la nueva version
+    $post->fill($request->all())->save();
     if ($request->file('file')) {
       $path = Storage::disk('storage/public')->put('image', $request->file('file'));
       $post->fill(['file' => asset($path)])->save();
@@ -120,7 +120,7 @@ class PostController extends Controller
   */
   public function destroy($id)
   {
-    Post::find($id);// Se busca y se elimina
+    Post::find($id);
     $this->authorize('pass', $post);
     $post->delete();
     return back()->with('info', 'Se ha eliminado la publicación');
