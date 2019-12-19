@@ -8,8 +8,9 @@ En este repositorio encontraras un blog armado con Laravel entre otros component
 - Caja de comentarios (solo usuarios registrados)
 - Listado de publicaciones 
 
-Para correr este blog en el ordenador se debe utilizar el comando de consola(**Requiere composer**)  
-`php artisan serv`
+Para correr este blog en el ordenador se debe utilizar ciertos comandos de consola (**Se requiere composer**)  
+Para iniciar el servidor `php artisan serv`  
+Para ejectuar las migraciones y los seeders `php artisan migrate --seed`
 
 Una vez levantado el servidor puede usar de prueba los siguientes usuarios:  
 **Administrador:**  
