@@ -46,9 +46,6 @@
                 </li>
               @endif
             @else
-              <li><a href="{{route('posts.index')}}">Entradas</a></li>
-              <li><a href="{{route('categories.index')}}">Categorias</a></li>
-              <li><a href="{{route('tags.index')}}">Etiquetas</a></li>
               <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                   {{ Auth::user()->name }} <span class="caret"></span>
@@ -66,13 +63,16 @@
                 </form>
               </div>
             </li>
-            @if(Auth::user()->role === "2")
-                  <li class="nav-item">
-                    <a href="{{route('admin.index')}}">
-                      Administrador
-                    </a>
-                  </li>
-                @endif
+              <li><a class="navbar alert alert-primary" href="{{route('posts.index')}}">Entradas</a></li>&nbsp;
+              <li><a class="navbar alert alert-primary" href="{{route('categories.index')}}">Categorias</a></li>&nbsp;
+              <li><a class="navbar alert alert-primary" href="{{route('tags.index')}}">Etiquetas</a></li>&nbsp;
+              @if(Auth::user()->role === "2")
+                    <li class="nav-item">
+                      <a class="navbar btn btn-dark" href="{{route('admin.index')}}">
+                        Administrador
+                      </a>
+                    </li>
+                  @endif
           @endguest
         </ul>
       </div>

@@ -24,12 +24,14 @@
               @endforeach
             </p>
             <p class="float-right">Publicado el: {{$post->created_at}}</p>
+            <br>
+            <hr>
             <h3>Comentarios</h3>
             @if(Auth::check())
               {{ Form::open(['route' => ['comments.store'], 'method' => 'POST']) }}
-              <p>{{ Form::textarea('body', old('body')) }}</p>
+              <p >{{ Form::textarea('body', old('body')) }}</p>
               {{ Form::hidden('post_id', $post->id) }}
-              <p>{{ Form::submit('send') }}</p>
+              <p class="">{{ Form::submit('Enviar', ['class' => 'btn btn-sm btn-primary'])}}</p>
               {{ Form::close() }}
             @endif
             @forelse ($post->comments as $comment)
@@ -37,7 +39,7 @@
               <p>{{$comment->body}}</p>
               <hr>
             @empty
-              <p>Sin Comentarios</p>
+              <p class="alert alert-info">Sin Comentarios</p>
             @endforelse
           </div>
         </div>
